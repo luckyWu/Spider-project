@@ -1,13 +1,29 @@
 # Spider-project
 ##爬虫项目
 
-…… 
+###[1kkk动漫网-破解图形旋转验证码](#1)
 
-[TOC]
+###[Scrapy分布式爬取安居客 --使用Scrapyd部署](#2)
 
-------------------
+###[使用Scrapy爬取马蜂窝游记](#3)
 
-# 1kkk动漫网-破解图形旋转验证码
+###[numpy+matplotlib分析彩票趋势](#4)
+
+###[（Scrapy+代理池+Cookie池）爬取全书网](#5)
+
+###[selenium+验证码注册中国移动](#6)
+
+### [爬取京东商品(selenium+MySQL)](#7)
+
+
+
+
+
+----
+
+
+
+# <a id="1">1kkk动漫网-破解图形旋转验证码</a>
 
 **<a id="1">1kkk漫画登陆界面</a>**
 
@@ -415,7 +431,7 @@ if __name__ == "__main__":
 
 
 
-# Scrapy分布式爬取安居客 --使用Scrapyd部署
+# <a id="2">Scrapy分布式爬取安居客 --使用Scrapyd部署</a>
 
 **1.爬取安居客租房信息**
 
@@ -745,7 +761,7 @@ Server response (200):
 
 
 
-#使用Scrapy爬取马蜂窝游记
+#<a id="3">使用Scrapy爬取马蜂窝游记</a>
 
 **简介：抓取每一个月的每一个地点的每一个用户的游记的简要信息，这里只简单的定义了要爬取的字段（用户名，标题，简述，点赞数**）
 
@@ -1095,7 +1111,7 @@ def getip():
 
 ------------
 
-# numpy+matplotlib分析彩票趋势
+# <a id="4">numpy+matplotlib分析彩票趋势</a>
 
 **目的：抓取彩票数据并将其可视化**
 
@@ -1425,7 +1441,7 @@ if __name__ == "__main__":
 
 ---
 
-#（Scrapy+代理池+Cookie池）爬取全书网
+#<a id="5">（Scrapy+代理池+Cookie池）爬取全书网</a>
 
 **目标:爬取每一个小说每一章节的内容**
 
@@ -1507,11 +1523,11 @@ class XiaoshuoItem(scrapy.Item):
 
 **使用Redis可视化工具 Redis Desktop Manager 来查看效果**
 
-![](quanshuwang/20190320152842.png)
+![](imgs/20190320152842.png)
 
 **在浏览器中调用接口看看效果**
 
-![](quanshuwang/20190320153428.png)
+![](imgs/20190320153428.png)
 
 
 
@@ -1521,7 +1537,7 @@ class XiaoshuoItem(scrapy.Item):
 
 连接redis看一下
 
-![](quanshuwang/20190320154141.png)
+![](imgs/20190320154141.png)
 
 **获取代理和cooike**
 
@@ -1695,7 +1711,7 @@ MONGO_DATABASE = 'quan_shu_wang'
 
 **效果展示**
 
-![](quanshuwang/20190320162222.png)
+![](imgs/20190320162222.png)
 
 
 
@@ -1706,7 +1722,7 @@ MONGO_DATABASE = 'quan_shu_wang'
 db.xiaoshuo2.aggregate({'$group':{'_id':'$title','章节数':{'$sum':1}}})
 ```
 
-![](quanshuwang/20190320163312.png)
+![](imgs/20190320163312.png)
 
 
 
@@ -1714,7 +1730,7 @@ db.xiaoshuo2.aggregate({'$group':{'_id':'$title','章节数':{'$sum':1}}})
 
 -----------------
 
-# selenium+验证码注册中国移动
+# <a id="6">selenium+验证码注册中国移动</a>
 
 **1.中国移动注册界面**
 
@@ -1909,7 +1925,7 @@ if __name__ == '__main__':
 
 ---------------
 
-# 爬取京东商品(selenium+MySQL)
+# <a id="7">爬取京东商品(selenium+MySQL)</a>
 
 **通过搜索关键字爬取相关的商品，这里笔者使用机器人作为关键字**
 
