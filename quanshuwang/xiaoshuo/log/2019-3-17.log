@@ -1,0 +1,24 @@
+2019-03-17 23:11:36 [scrapy.core.scraper] ERROR: Error downloading <GET http://www.quanshuwang.com/shuku/>
+Traceback (most recent call last):
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\core\downloader\middleware.py", line 43, in process_request
+    defer.returnValue((yield download_func(request=request,spider=spider)))
+twisted.internet.error.ConnectionRefusedError: Connection was refused by other side: 10061: 由于目标计算机积极拒绝，无法连接。.
+2019-03-17 23:12:58 [scrapy.core.downloader.handlers.http11] WARNING: Got data loss in http://www.quanshuwang.com/book/171/171047. If you want to process broken responses set the setting DOWNLOAD_FAIL_ON_DATALOSS = False -- This message won't be shown in further requests
+2019-03-17 23:12:58 [scrapy.core.downloader.handlers.http11] WARNING: Got data loss in http://www.quanshuwang.com/book_166643.html. If you want to process broken responses set the setting DOWNLOAD_FAIL_ON_DATALOSS = False -- This message won't be shown in further requests
+2019-03-17 23:12:58 [scrapy.core.downloader.handlers.http11] WARNING: Got data loss in http://www.quanshuwang.com/book_162104.html. If you want to process broken responses set the setting DOWNLOAD_FAIL_ON_DATALOSS = False -- This message won't be shown in further requests
+2019-03-17 23:12:58 [scrapy.core.downloader.handlers.http11] WARNING: Got data loss in http://www.quanshuwang.com/book_163702.html. If you want to process broken responses set the setting DOWNLOAD_FAIL_ON_DATALOSS = False -- This message won't be shown in further requests
+2019-03-17 23:13:53 [scrapy.core.scraper] ERROR: Error downloading <GET http://www.quanshuwang.com/shuku/>
+Traceback (most recent call last):
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\core\downloader\middleware.py", line 43, in process_request
+    defer.returnValue((yield download_func(request=request,spider=spider)))
+ValueError: invalid hostname: <!DOCTYPE HTML PUBLIC "-
+2019-03-17 23:15:03 [scrapy.core.scraper] ERROR: Error downloading <GET http://www.quanshuwang.com/shuku/>
+Traceback (most recent call last):
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\core\downloader\middleware.py", line 43, in process_request
+    defer.returnValue((yield download_func(request=request,spider=spider)))
+ValueError: invalid hostname: <!DOCTYPE HTML PUBLIC "-
+2019-03-17 23:16:22 [scrapy.core.scraper] ERROR: Error downloading <GET http://www.quanshuwang.com/shuku/>
+Traceback (most recent call last):
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\core\downloader\middleware.py", line 43, in process_request
+    defer.returnValue((yield download_func(request=request,spider=spider)))
+ValueError: invalid hostname: <!DOCTYPE HTML PUBLIC "-
