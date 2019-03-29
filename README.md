@@ -1,4 +1,4 @@
-# Spider-project
+﻿# Spider-project
 ##爬虫项目
 
 ###[1kkk动漫网-破解图形旋转验证码](#1)
@@ -13,9 +13,9 @@
 
 ###[selenium+验证码注册中国移动](#6)
 
-### [爬取京东商品(selenium+MySQL)](#7)
+###[爬取京东商品(selenium+MySQL)](#7)
 
-###[房天下](8#)
+###[房天下](#8)
 
 ###[链家](#9)
 
@@ -2329,7 +2329,7 @@ if __name__ == '__main__':
 
 -----
 
-# <a id="#8">房天下</a>
+# <a id="8">房天下</a>
 
 ![](imgs/20190329140211.png)
 
@@ -2341,11 +2341,64 @@ if __name__ == '__main__':
 * 2.获取每一城市所有房屋
 * 3.获取每个房屋详情
 
+房天下的分页栏是动态加载上去的，这里介绍下房屋分页获取代码
+
+
+
+```
+ def loupan(self,response):
+        '''
+        每个城市所有楼盘
+        :param response:
+        :return:
+        '''
+        print(response.status)
+        if response.status == 200:
+            base_url = response.url
+            html = etree.HTML(response.text)
+            lous = html.xpath('//div[@class="nl_con clearfix" and contains(@id,"newhouse_loupai_list")]/ul/li')
+            if lous:
+                for lou in lous:
+                    img_url = lou.xpath('./div[@class="clearfix"]/div[@class="nlc_img"]/a/img/@src')
+                    if (img_url and len(img_url)>=2):
+                        i_url = img_url[1]
+                    else:
+                        i_url = ''
+
+                    t_obj = lou.xpath('./div[@class="clearfix"]/div[@class="nlc_details"]//a')
+                    if t_obj:
+                        item = urlItem()
+                        href = t_obj[0].xpath('./@href')
+                        title = t_obj[0].xpath('./text()')
+                        print(title,'--------------this is title')
+                        if title:
+                            item['id'] = title[0].strip().replace('\t','').replace('\n','')
+                            item['img_url'] = i_url
+                            yield item
+
+                        if href:
+                            in_href = 'https:' + href[0]
+                            yield Request(in_href, dont_filter=True, callback=self.base_parse)
+                    else:
+                        print(t_obj)
+
+                if '/b9' not in base_url:
+                    n_href = re.sub('house/s','house/s/b92',base_url)
+                    yield Request(n_href, dont_filter=True, callback=self.loupan)
+                else:
+                    obj = re.search('/s/b9(\d+)/',base_url)
+                    if obj:
+                        temp = int(obj.group(1)) + 1
+                        tt = '/s/b9' + str(temp) + '/'
+                        n1_href = re.sub('/s/b9(\d+)/',tt,base_url)
+                        yield Request(n1_href, dont_filter=True, callback=self.loupan)
+```
+
 
 
 ----
 
-#<a id="#9">链家</a>
+#<a id="9">链家</a>
 
 ----
 
