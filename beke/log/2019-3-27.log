@@ -1,0 +1,128 @@
+2019-03-27 22:58:22 [scrapy.utils.log] INFO: Scrapy 1.6.0 started (bot: beke)
+2019-03-27 22:58:22 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.5.1, w3lib 1.20.0, Twisted 18.9.0, Python 3.7.1 (default, Dec 10 2018, 22:54:23) [MSC v.1915 64 bit (AMD64)], pyOpenSSL 18.0.0 (OpenSSL 1.1.1a  20 Nov 2018), cryptography 2.4.2, Platform Windows-7-6.1.7601-SP1
+2019-03-27 22:58:22 [scrapy.crawler] INFO: Overridden settings: {'AUTOTHROTTLE_ENABLED': True, 'BOT_NAME': 'beke', 'CONCURRENT_REQUESTS': 4, 'DOWNLOAD_DELAY': 0.57, 'LOG_FILE': 'log/2019-3-27.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'beke.spiders', 'SPIDER_MODULES': ['beke.spiders']}
+2019-03-27 22:58:22 [scrapy.extensions.telnet] INFO: Telnet Password: ca910d40783f4f41
+2019-03-27 22:58:22 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.throttle.AutoThrottle']
+2019-03-27 22:58:24 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'beke.middlewares.BeikeDownloaderMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2019-03-27 22:58:24 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2019-03-27 22:58:24 [scrapy.middleware] INFO: Enabled item pipelines:
+['beke.pipelines.BekePipeline']
+2019-03-27 22:58:24 [scrapy.core.engine] INFO: Spider opened
+2019-03-27 22:58:25 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2019-03-27 22:58:25 [bk] INFO: Spider opened: bk
+2019-03-27 22:58:25 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2019-03-27 22:58:41 [scrapy.core.scraper] ERROR: Spider error processing <GET https://hf.fang.ke.com/loupan/> (referer: https://hf.fang.ke.com/loupan/pg2/)
+Traceback (most recent call last):
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\utils\defer.py", line 102, in iter_errback
+    yield next(it)
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\referer.py", line 339, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "C:\Users\Administrator\Desktop\work\beike\beke\spiders\bk.py", line 134, in parse_xianqing
+    item['id'] = id
+UnboundLocalError: local variable 'id' referenced before assignment
+2019-03-27 22:58:44 [scrapy.core.scraper] ERROR: Spider error processing <GET https://hf.fang.ke.com/loupan/> (referer: https://hf.fang.ke.com/loupan/pg3/)
+Traceback (most recent call last):
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\utils\defer.py", line 102, in iter_errback
+    yield next(it)
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\referer.py", line 339, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "C:\Users\Administrator\Desktop\work\beike\beke\spiders\bk.py", line 134, in parse_xianqing
+    item['id'] = id
+UnboundLocalError: local variable 'id' referenced before assignment
+2019-03-27 22:58:48 [scrapy.core.scraper] ERROR: Spider error processing <GET https://hf.fang.ke.com/loupan/> (referer: https://hf.fang.ke.com/loupan/pg4/)
+Traceback (most recent call last):
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\utils\defer.py", line 102, in iter_errback
+    yield next(it)
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\referer.py", line 339, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "C:\Users\Administrator\Desktop\work\beike\beke\spiders\bk.py", line 134, in parse_xianqing
+    item['id'] = id
+UnboundLocalError: local variable 'id' referenced before assignment
+2019-03-27 22:58:50 [scrapy.core.scraper] ERROR: Spider error processing <GET https://hf.fang.ke.com/loupan/> (referer: https://hf.fang.ke.com/loupan/pg5/)
+Traceback (most recent call last):
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\utils\defer.py", line 102, in iter_errback
+    yield next(it)
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\referer.py", line 339, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "d:\users\administrator\anaconda3\lib\site-packages\scrapy\spidermiddlewares\depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "C:\Users\Administrator\Desktop\work\beike\beke\spiders\bk.py", line 134, in parse_xianqing
+    item['id'] = id
+UnboundLocalError: local variable 'id' referenced before assignment
+2019-03-27 23:00:23 [scrapy.utils.log] INFO: Scrapy 1.6.0 started (bot: beke)
+2019-03-27 23:00:23 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.5.1, w3lib 1.20.0, Twisted 18.9.0, Python 3.7.1 (default, Dec 10 2018, 22:54:23) [MSC v.1915 64 bit (AMD64)], pyOpenSSL 18.0.0 (OpenSSL 1.1.1a  20 Nov 2018), cryptography 2.4.2, Platform Windows-7-6.1.7601-SP1
+2019-03-27 23:00:23 [scrapy.crawler] INFO: Overridden settings: {'AUTOTHROTTLE_ENABLED': True, 'BOT_NAME': 'beke', 'CONCURRENT_REQUESTS': 4, 'DOWNLOAD_DELAY': 0.38, 'LOG_FILE': 'log/2019-3-27.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'beke.spiders', 'SPIDER_MODULES': ['beke.spiders']}
+2019-03-27 23:00:23 [scrapy.extensions.telnet] INFO: Telnet Password: becf4a4ee7041c9f
+2019-03-27 23:00:23 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.throttle.AutoThrottle']
+2019-03-27 23:00:25 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'beke.middlewares.BeikeDownloaderMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2019-03-27 23:00:25 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2019-03-27 23:00:25 [scrapy.middleware] INFO: Enabled item pipelines:
+['beke.pipelines.BekePipeline']
+2019-03-27 23:00:25 [scrapy.core.engine] INFO: Spider opened
+2019-03-27 23:00:25 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2019-03-27 23:00:25 [bk] INFO: Spider opened: bk
+2019-03-27 23:00:25 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2019-03-27 23:01:25 [scrapy.extensions.logstats] INFO: Crawled 32 pages (at 32 pages/min), scraped 17 items (at 17 items/min)
+2019-03-27 23:02:25 [scrapy.extensions.logstats] INFO: Crawled 70 pages (at 38 pages/min), scraped 37 items (at 20 items/min)

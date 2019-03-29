@@ -1,0 +1,6 @@
+# 限制页数返回如下
+
+body class="ltr" itemtype="http://schema.org/WebPage"><script type='text/javascript'>I10C.HtmlStreaming.ReloadWithNoHtmlStreaming('6', '15209682537564479705');</script></body></html>
+
+
+#scrapy crawl digikey_com

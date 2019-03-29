@@ -1,0 +1,99 @@
+c2019-03-26 01:01:27 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.5.1, w3lib 1.20.0, Twisted 18.9.0, Python 3.7.1 (default, Dec 10 2018, 22:54:23) [MSC v.1915 64 bit (AMD64)], pyOpenSSL 18.0.0 (OpenSSL 1.1.1a  20 Nov 2018), cryptography 2.4.2, Platform Windows-7-6.1.7601-SP1
+2019-03-26 01:01:27 [scrapy.crawler] INFO: Overridden settings: {'AUTOTHROTTLE_ENABLED': True, 'BOT_NAME': 'digikey', 'CONCURRENT_REQUESTS': 2, 'CONCURRENT_REQUESTS_PER_DOMAIN': 2, 'CONCURRENT_REQUESTS_PER_IP': 2, 'DOWNLOAD_DELAY': 0.93, 'DUPEFILTER_CLASS': 'scrapy_redis.dupefilter.RFPDupeFilter', 'LOG_FILE': 'log/2019-3-26.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'digikey.spiders', 'SCHEDULER': 'scrapy_redis.scheduler.Scheduler', 'SPIDER_MODULES': ['digikey.spiders']}
+2019-03-26 01:01:27 [scrapy.extensions.telnet] INFO: Telnet Password: a11d0d108efeb6be
+2019-03-26 01:01:27 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.throttle.AutoThrottle']
+2019-03-26 01:01:29 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['digikey.middlewares.DigikeyDownloaderMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2019-03-26 01:01:29 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2019-03-26 01:01:29 [scrapy.middleware] INFO: Enabled item pipelines:
+['digikey.pipelines.DigikeyPipeline']
+2019-03-26 01:01:29 [scrapy.core.engine] INFO: Spider opened
+2019-03-26 01:01:29 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2019-03-26 01:01:29 [digikey_com] INFO: Spider opened: digikey_com
+2019-03-26 01:01:29 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2019-03-26 01:02:18 [root] WARNING: parse失败:(ConnectionRefusedError('由于目标计算机积极拒绝，无法连接。'), '---', 'https://www.digikey.com/products/en/kits/sensor-kits/662')
+2019-03-26 01:02:28 [root] WARNING: parse失败:(ConnectionRefusedError('由于目标计算机积极拒绝，无法连接。'), '---', 'https://www.digikey.com/products/en/kits/switch-kits/678')
+2019-03-26 01:02:29 [scrapy.extensions.logstats] INFO: Crawled 15 pages (at 15 pages/min), scraped 338 items (at 338 items/min)
+2019-03-26 01:03:29 [scrapy.extensions.logstats] INFO: Crawled 23 pages (at 8 pages/min), scraped 538 items (at 200 items/min)
+2019-03-26 01:04:05 [root] WARNING: parse失败:(TCPTimedOutError('由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。'), '---', 'https://www.digikey.com/products/en/relays/reed-relays/964')
+2019-03-26 01:04:29 [scrapy.extensions.logstats] INFO: Crawled 24 pages (at 1 pages/min), scraped 543 items (at 5 items/min)
+2019-03-26 01:04:45 [root] WARNING: parse失败:(ConnectionRefusedError('由于目标计算机积极拒绝，无法连接。'), '---', 'https://www.digikey.com/products/en/tools/wire-cutters/234')
+2019-03-26 01:05:29 [scrapy.extensions.logstats] INFO: Crawled 24 pages (at 0 pages/min), scraped 543 items (at 0 items/min)
+2019-03-26 01:06:10 [scrapy.crawler] INFO: Received SIGINT, shutting down gracefully. Send again to force 
+2019-03-26 01:06:10 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2019-03-26 01:06:10 [scrapy.crawler] INFO: Received SIGINT twice, forcing unclean shutdown
+2019-03-26 01:06:20 [scrapy.utils.log] INFO: Scrapy 1.6.0 started (bot: digikey)
+2019-03-26 01:06:20 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.5.1, w3lib 1.20.0, Twisted 18.9.0, Python 3.7.1 (default, Dec 10 2018, 22:54:23) [MSC v.1915 64 bit (AMD64)], pyOpenSSL 18.0.0 (OpenSSL 1.1.1a  20 Nov 2018), cryptography 2.4.2, Platform Windows-7-6.1.7601-SP1
+2019-03-26 01:06:20 [scrapy.crawler] INFO: Overridden settings: {'AUTOTHROTTLE_ENABLED': True, 'BOT_NAME': 'digikey', 'CONCURRENT_REQUESTS': 2, 'CONCURRENT_REQUESTS_PER_DOMAIN': 2, 'CONCURRENT_REQUESTS_PER_IP': 2, 'DOWNLOAD_DELAY': 0.81, 'DUPEFILTER_CLASS': 'scrapy_redis.dupefilter.RFPDupeFilter', 'LOG_FILE': 'log/2019-3-26.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'digikey.spiders', 'SCHEDULER': 'scrapy_redis.scheduler.Scheduler', 'SPIDER_MODULES': ['digikey.spiders']}
+2019-03-26 01:06:20 [scrapy.extensions.telnet] INFO: Telnet Password: 42d0109bd6a72960
+2019-03-26 01:06:20 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.throttle.AutoThrottle']
+2019-03-26 01:06:22 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['digikey.middlewares.DigikeyDownloaderMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2019-03-26 01:06:22 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2019-03-26 01:06:22 [scrapy.middleware] INFO: Enabled item pipelines:
+['digikey.pipelines.DigikeyPipeline']
+2019-03-26 01:06:22 [scrapy.core.engine] INFO: Spider opened
+2019-03-26 01:06:22 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2019-03-26 01:06:22 [digikey_com] INFO: Spider opened: digikey_com
+2019-03-26 01:06:22 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2019-03-26 01:06:54 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/tools/vises/253')
+2019-03-26 01:07:03 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/tools/pliers/243')
+2019-03-26 01:07:24 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/tools/vacuums/235')
+2019-03-26 01:07:33 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/kits/tape-kits/673')
+2019-03-26 01:07:33 [scrapy.extensions.logstats] INFO: Crawled 6 pages (at 6 pages/min), scraped 119 items (at 119 items/min)
+2019-03-26 01:08:26 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/kits/resistor-kits/653')
+2019-03-26 01:08:35 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/relays/accessories/182')
+2019-03-26 01:08:35 [scrapy.extensions.logstats] INFO: Crawled 20 pages (at 14 pages/min), scraped 440 items (at 321 items/min)
+2019-03-26 01:09:22 [scrapy.extensions.logstats] INFO: Crawled 35 pages (at 15 pages/min), scraped 815 items (at 375 items/min)
+2019-03-26 01:09:46 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/kits/resistor-kits/653/page/10')
+2019-03-26 01:10:04 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/kits/resistor-kits/653/page/10')
+2019-03-26 01:10:22 [scrapy.extensions.logstats] INFO: Crawled 44 pages (at 9 pages/min), scraped 1040 items (at 225 items/min)
+2019-03-26 01:10:43 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/kits/resistor-kits/653/page/11')
+2019-03-26 01:10:52 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/relays/accessories/182/page/15')
+2019-03-26 01:11:09 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/kits/resistor-kits/653/page/11')
+2019-03-26 01:11:18 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/relays/accessories/182/page/15')
+2019-03-26 01:11:22 [scrapy.extensions.logstats] INFO: Crawled 44 pages (at 0 pages/min), scraped 1040 items (at 0 items/min)
+2019-03-26 01:12:28 [root] WARNING: parse失败:(TimeoutError(''), '---', 'https://www.digikey.com/products/en/kits/resistor-kits/653/page/11')
+2019-03-26 01:12:28 [scrapy.extensions.logstats] INFO: Crawled 45 pages (at 1 pages/min), scraped 1065 items (at 25 items/min)
+2019-03-26 01:12:30 [scrapy.crawler] INFO: Received SIGINT, shutting down gracefully. Send again to force 
+2019-03-26 01:12:30 [scrapy.crawler] INFO: Received SIGINT twice, forcing unclean shutdown
+2019-03-26 01:12:38 [root] WARNING: parse失败:(ConnectionRefusedError('由于目标计算机积极拒绝，无法连接。'), '---', 'https://www.digikey.com/products/en/relays/accessories/182/page/16')
+2019-03-26 01:12:38 [scrapy.core.engine] INFO: Closing spider (shutdown)

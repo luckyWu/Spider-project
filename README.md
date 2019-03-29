@@ -15,6 +15,14 @@
 
 ### [爬取京东商品(selenium+MySQL)](#7)
 
+###[房天下](8#)
+
+###[链家](#9)
+
+### [题库网](#10)
+
+###[IC网](#11)
+
 
 
 
@@ -459,6 +467,12 @@ class AnjukeItem(Item):
     info = Field()
     addr = Field()
     price = Field()
+    
+class zu_house_detail(Item):
+    """创建名为anjuke的item"""
+    table_name = 'zu_house_detail'
+    id = Field()
+    conts = Field()
 ```
 
 **5.编写spider**
@@ -466,76 +480,153 @@ class AnjukeItem(Item):
 * 获取所有城市地点
 * 选择每个地点的租房信息
 * 获取每个地点所有的租房信息（通过获取下一页连接进行翻页）
+* 获取房屋详情
 
 ```
 class AjkSpider(scrapy.Spider):
     name = 'ajk'
     allowed_domains = ['*']
+    start_urls = ['http://sz.zu.anjuke.com/']
+
     citys_url = 'https://www.anjuke.com/sy-city.html'
 
+    url = 'https://sz.zu.anjuke.com/?from=navigation'
+
     def start_requests(self):
-        yield Request(self.citys_url, dont_filter=True, callback=self.parse)
+        yield Request(self.citys_url, dont_filter=True,
+                meta={
+                'dont_redirect': True,
+                'handle_httpstatus_list': [302]}, # 不允许重定向
+                      callback=self.parse)
 
     def parse(self, response):
-        """解析每个地点"""
-        
-        # print(response.status,'-------------status')
-        res = (response.text)
-        html = etree.HTML(res)
-        cons = html.xpath('//div[@class="letter_city"]/ul//li')
-        
-        # 获取每一个地点的链接
-        for con in cons[:]:
-            citys = con.xpath('.//div[@class="city_list"]//a')
-            for every_city in citys[:]:
-                href = every_city.xpath('./@href')
-                city = every_city.xpath('./text()')
-                if href:
-                    yield Request(href[0], dont_filter=True, callback=self.parse_city)
-
+        """
+        获取每个城市
+        :param response:
+        :return:
+        """
+        print(response.status,'-------------parse')
+        if response.status == 200:
+            res = (response.text)
+            # be = BeautifulSoup(res,'lxml')
+            # if be and be.title:
+            #     print(be.title.string)
+            # else:
+            #     print(response.text)
+            # print(res)
+            html = etree.HTML(res)
+            if html is not None:
+                cons = html.xpath('//div[@class="letter_city"]/ul//li')
+                for con in cons[:]:
+                    citys = con.xpath('.//div[@class="city_list"]//a')
+                    for every_city in citys[:]:
+                        href = every_city.xpath('./@href')
+                        city = every_city.xpath('./text()')
+                        if href:
+                            yield Request(href[0], dont_filter=True,
+                                meta={
+                                    'dont_redirect': True,
+                                    'handle_httpstatus_list': [302]},
+                            callback=self.parse_city)
+                        # print(n,city, href)
+                        # n  += 1
 
     def parse_city(self, response):
-        """获取租房的链接"""
-        # print(response.status)
-        res = ( response.text)
-        html = etree.HTML(res)
-        con = html.xpath('//li[@class="li_single li_itemsnew li_unselected"]//a[@class="a_navnew"]/@href')
-        
-        if con:
-            yield Request(con[2], dont_filter=True, callback=self.parse_zu)
+        """
+        每个城市
+        :param response:
+        :return:
+        """
+        # print(response.status,'parse_city')
+        if response.status == 200:
+            res = ( response.text)
+            html = etree.HTML(res)
+            bs = BeautifulSoup(res, 'lxml')
+            # if bs and bs.title:
+            #     b4 = bs.title.string
+            #     print(b4)
+            # else:
+            #     print(response.text)
+            if html is not None:
+                con = html.xpath('//li[@class="li_single li_itemsnew li_unselected"]//a[@class="a_navnew"]/@href')
+
+                print('-----------',con,'----------------')
+                yield Request(con[2], dont_filter=True,
+                              meta={
+                                  'dont_redirect': True,
+                                  'handle_httpstatus_list': [302]},
+                              callback=self.parse_zu)
+
+
+
 
     def parse_zu(self, response):
-        """解析租房信息"""
-        
+        """
+        每个城市租房列表
+        :param response:
+        :return:
+        """
+
+        # print(response.status,'parse_zu---------')
+        if response.status == 200:
+            res = ( response.text)
+            html = etree.HTML(res)
+            # bs = BeautifulSoup(res, 'lxml')
+            # if bs and bs.title:
+            if html is not None:
+                cons = html.xpath('//div[@class="zu-itemmod  "]')#div[@class="item-mod "]')
+                next = html.xpath('//a[@class="aNxt"]/@href')
+                # 获取每一个房屋
+                for con in cons[:]:
+                    print('into------------')
+                    img_url = con.xpath('./a/img/@src')
+                    title = con.xpath('./div[@class="zu-info"]/h3/a/text()')
+                    i_href = con.xpath('./div[@class="zu-info"]/h3/a/@href')
+                    info = con.xpath('./div[@class="zu-info"]/p//text()')
+                    addr = con.xpath('./div[@class="zu-info"]/address[@class="details-item"]//text()')
+                    price = con.xpath('./div[@class="zu-side"]/p/strong/text()')
+                    # print(n, title, info,addr, price, img_url)
+                    item = AnjukeItem()
+                    item['id'] = title
+                    item['img_url'] = img_url[0] if img_url else ''
+                    item['title'] = title[0] if title else ''
+                    item['info'] = info[0] if info else ''
+                    item['price'] = price[0] if price else ''
+                    item['addr'] = addr
+                    print(n,title)
+                    yield item
+                    if i_href:
+                        yield Request(i_href[0], dont_filter=True,
+                                      meta={
+                                          'dont_redirect': True,
+                                          'handle_httpstatus_list': [302]},
+                                      callback=self.parse_detail)
+                    # n += 1
+                # 下一页
+                if next:
+                    yield Request(next[0], dont_filter=True,
+                                  meta={
+                                      'dont_redirect': True,
+                                      'handle_httpstatus_list': [302]},
+                                  callback=self.parse_zu)
+
+    def parse_detail(self, response):
+        """
+        租房详情
+        :param response:
+        :return:
+        """
         print(response.status)
-        res = response.text
+        res = ( response.text)
         html = etree.HTML(res)
-        # bs = BeautifulSoup(res, 'lxml')
-        # b4 = bs.title.string
-        # print(b4)
-        cons = html.xpath('//div[@class="zu-itemmod  "]')
-        next = html.xpath('//a[@class="aNxt"]/@href') # 下一页链接
-        
-        # 依次获取每个租房信息
-        for con in cons[:]:
-            print('into------------')
-            img_url = con.xpath('./a/img/@src')
-            title = con.xpath('./div[@class="zu-info"]/h3/a/text()')
-            info = con.xpath('./div[@class="zu-info"]/p//text()')
-            addr = con.xpath('./div[@class="zu-info"]/address[@class="details-item"]//text()')
-            price = con.xpath('./div[@class="zu-side"]/p/strong/text()')
-
-            item = AnjukeItem()
-            item['img_url'] = img_url[0] if img_url else ''
-            item['title'] = title[0] if title else ''
-            item['info'] = info[0] if info else ''
-            item['price'] = price[0] if price else ''
-            item['addr'] = addr
+        if html is not None:
+            con = html.xpath('//ul[@class="house-info-zufang cf"]')
+            item = zu_house_detail()
+            id = response.url
+            con_text = con[0].xpath('string(.)').strip().replace('\n','')
+            item['id'] = id
+            item['conts'] = con_text
             yield item
-
-        if next:
-            yield Request(next[0], dont_filter=True, callback=self.parse_zu)
-
 ```
 
 **6.pineline编写**
@@ -563,21 +654,34 @@ class AnjukePipeline(object):
     def close_spider(self, spider):
         self.client.close()
 
-    def process_item(self, item, spider):
-        s = item['addr']
+    def _AnjukeItem(self, item):
+        print('into pipeline')
+        s = item['addr'] # addr有格式需要处理
         l = []
-        # addr存在则进行清洗
         if s:
             for i in s[:]:
                 l.append(i.strip())
         item['addr'] = ','.join(l)
         self.db[item.table_name].update({'title': item.get('title')}, {'$set': dict(item)}, True)
         return item
+
+
+    def _zu_house_detail(self, item):
+        self.db[item.table_name].insert(dict(item))
+        return item
+
+    def process_item(self, item, spider):
+        if isinstance(item,AnjukeItem):
+            return self._AnjukeItem(item)
+        elif isinstance(item,zu_house_detail):
+            return self._zu_house_detail(item)
+        else:
+            return item
 ```
 
 **7.middlewares配置**
 
-笔者付费买了蘑菇代理并在腾讯云搭了个代理池，代理池是参考网上大神的编写的，笔者将获取免费代理ip那部分函数注释了，换成调用蘑菇代理。当然是用免费的代理还是可以用的如需要可参考：
+安居客封的比较厉害，有验证码，503,302等一系列问题出现，这里笔者付费买了蘑菇代理并在腾讯云搭了个代理池，代理使用的蘑菇代理。当然是用免费的代理还是可以用的如需要可参考笔者的代理池：
 
 ```
 def get_ip():
@@ -587,8 +691,71 @@ def get_ip():
     return ip
 
 class ProxyMiddleware(object):
+
+    def __init__(self,user_agent):
+        self.ip = ip
+        self.user_agent = user_agent
+    @classmethod
+    def from_crawler(cls, crawler):
+        # This method is used by Scrapy to create your spiders.
+        s = cls( user_agent=crawler.settings.get('MY_USER_AGENT'))
+        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
+        return s
+
     def process_request(self, request, spider):
-        request.meta['proxies'] = get_ip()
+
+        request.meta['proxy'] = self.ip
+        agent = random.choice(self.user_agent)
+        request.headers['User-Agent'] = agent
+        request.meta['download_timeout'] = 25
+        print('当前代理ip--->',self.ip,'当前url--->',request.url)
+
+    def process_response(self, request, response, spider):
+    	"""
+    	处理503,302，内容为空等各种情况
+    	"""
+        print('process_response,',response.url,response.status)
+        if response.status in [503]:
+            print('错误',response.url,response.status)
+            self.ip = get_ip()
+            request.meta['proxy'] = self.ip
+            time.sleep(2)
+            return request
+        elif response.status == 302:
+            print('302',response.url,response.status)
+            if response.text:
+                # print(response.text)
+                return response
+            else:
+                self.ip = get_ip()
+                print('302 重试 ip',self.ip)
+                request.meta['proxy'] = self.ip
+                time.sleep(1)
+                return request
+        else:
+            res = (response.text)
+            html = etree.HTML(res)
+            bs = BeautifulSoup(res, 'lxml')
+            b4 = bs.title.string
+            if '访问验证-安居客'in b4 or '500 Internal Server Error' in b4:
+                print('验证码---重试！！！',response.url)
+                self.ip = get_ip()
+                print('重试ip!!',self.ip)
+                request.meta['proxy'] = self.ip
+                time.sleep(2)
+                return request
+            else:
+                return response
+        return response
+
+    def process_exception(self, request, exception, spider):
+        self.ip = get_ip()
+        request.meta['proxy'] = self.ip
+        time.sleep(2)
+        # print(response.status)
+        return request
+        print(exception,self.ip)
+
 ```
 
 
@@ -596,6 +763,9 @@ class ProxyMiddleware(object):
 **7.setting配置**
 
 * robots、User-Agent 必须配置,否则会失败
+* 控制并发数（按自己情况控制）
+* 下载延迟
+* User-Agent池
 * 开启所有用到的中间件
 * 分布式的配置（需安装scrapy-redis，这里笔者用阿里云搭建redis服务器）
 
@@ -2156,4 +2326,61 @@ if __name__ == '__main__':
 ![](imgs/20190321095302.png)
 
 
+
+-----
+
+# <a id="#8">房天下</a>
+
+![](imgs/20190329140211.png)
+
+
+
+# 获取所有新楼盘信息
+
+* 1.获取所有城市
+* 2.获取每一城市所有房屋
+* 3.获取每个房屋详情
+
+
+
+----
+
+#<a id="#9">链家</a>
+
+----
+
+#<a id="10" >题库网</a>
+
+![](imgs/20190329135222.png)
+
+
+
+**题库网的页面是js渲染上去的，内容通过ajax加载**
+
+关键在于在js文件中找到关键请求参数，这里就不详解了
+
+笔者数据存在mongodb中
+
+```
+{
+	"_id" : ObjectId("5c9a1cb0bd26d222bcf1e8d7"),
+	"sid" : 500012,
+	"versionname" : "人教版",
+	"bookname" : "八年级上册",
+	"typeName" : "单选题",
+	"difficulty" : 1,
+	"bodyhtml" : "<span class=\"uc_q_object\">下列关于生活中常见热现象的解释，错误的是（　　）</span>",
+	"anylysishtml" : "<span class=\"uc_q_object\">解：A、大气压强随高度的升高而减小，液体沸点随气压的减小而降低．<br>B、狗没有汗腺，靠舌头蒸发吸热降温．<br>C、樟脑丸越来越小，这是因为升华的缘故．<br>D、水管外有水珠，是空气中的水蒸气遇到温度低的水管，液化成小水滴的结果．<br>本题选错误答案，故选C．</span>"
+}
+```
+
+
+
+
+
+
+
+---
+
+# <a id="11">IC网</a>
 

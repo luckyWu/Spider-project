@@ -1,0 +1,12 @@
+2019-03-28 00:20:35 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (302) to <GET https://m.ke.com/huaibei/loupan/> from <GET https://m.ke.com/huaibei/loupanpg2/>
+
+
+
+
+#2.https://la.fang.ke.com/loupan/p_bcbjqxb/xiangqing/
+2019-03-28 09:25:02 [urllib3.connectionpool] DEBUG: Starting new HTTP connection (1): 
+
+
+#3twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost
+
+#二手房分页栏是渲染上去的
