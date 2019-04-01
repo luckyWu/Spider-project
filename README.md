@@ -1,9 +1,9 @@
-﻿# Spider-project
+# Spider-project
 ##爬虫项目
 
 ###[1kkk动漫网-破解图形旋转验证码](#1)
 
-###[Scrapy分布式爬取安居客 --使用Scrapyd部署](#2)
+###[Scrapy爬取安居客 --使用Scrapyd部署](#2)
 
 ###[使用Scrapy爬取马蜂窝游记](#3)
 
@@ -17,11 +17,9 @@
 
 ###[房天下](#8)
 
-###[链家](#9)
-
 ### [题库网](#10)
 
-###[IC网](#11)
+
 
 
 
@@ -439,7 +437,7 @@ if __name__ == "__main__":
 
 
 
-# <a id="2">Scrapy分布式爬取安居客 --使用Scrapyd部署</a>
+# <a id="2">Scrapy爬取安居客 --使用Scrapyd部署</a>
 
 **1.爬取安居客租房信息**
 
@@ -501,7 +499,7 @@ class AjkSpider(scrapy.Spider):
 
     def parse(self, response):
         """
-        获取每个城市
+        获取所有城市
         :param response:
         :return:
         """
@@ -517,6 +515,7 @@ class AjkSpider(scrapy.Spider):
             html = etree.HTML(res)
             if html is not None:
                 cons = html.xpath('//div[@class="letter_city"]/ul//li')
+               
                 for con in cons[:]:
                     citys = con.xpath('.//div[@class="city_list"]//a')
                     for every_city in citys[:]:
@@ -537,20 +536,12 @@ class AjkSpider(scrapy.Spider):
         :param response:
         :return:
         """
-        # print(response.status,'parse_city')
+      
         if response.status == 200:
             res = ( response.text)
             html = etree.HTML(res)
-            bs = BeautifulSoup(res, 'lxml')
-            # if bs and bs.title:
-            #     b4 = bs.title.string
-            #     print(b4)
-            # else:
-            #     print(response.text)
             if html is not None:
                 con = html.xpath('//li[@class="li_single li_itemsnew li_unselected"]//a[@class="a_navnew"]/@href')
-
-                print('-----------',con,'----------------')
                 yield Request(con[2], dont_filter=True,
                               meta={
                                   'dont_redirect': True,
@@ -576,7 +567,7 @@ class AjkSpider(scrapy.Spider):
             if html is not None:
                 cons = html.xpath('//div[@class="zu-itemmod  "]')#div[@class="item-mod "]')
                 next = html.xpath('//a[@class="aNxt"]/@href')
-                # 获取每一个房屋
+                # 获取每一个房屋信息
                 for con in cons[:]:
                     print('into------------')
                     img_url = con.xpath('./a/img/@src')
@@ -681,7 +672,7 @@ class AnjukePipeline(object):
 
 **7.middlewares配置**
 
-安居客封的比较厉害，有验证码，503,302等一系列问题出现，这里笔者付费买了蘑菇代理并在腾讯云搭了个代理池，代理使用的蘑菇代理。当然是用免费的代理还是可以用的如需要可参考笔者的代理池：
+安居客封的比较厉害，有验证码等一系列问题出现，这里笔者付费买了蘑菇代理并在腾讯云搭了个代理池，代理使用的蘑菇代理。当然是用免费的代理还是可以用的如需要可参考笔者的代理池：
 
 ```
 def get_ip():
@@ -697,7 +688,7 @@ class ProxyMiddleware(object):
         self.user_agent = user_agent
     @classmethod
     def from_crawler(cls, crawler):
-        # This method is used by Scrapy to create your spiders.
+     
         s = cls( user_agent=crawler.settings.get('MY_USER_AGENT'))
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
@@ -712,19 +703,10 @@ class ProxyMiddleware(object):
 
     def process_response(self, request, response, spider):
     	"""
-    	处理503,302，内容为空等各种情况
+    	处理302，内容为空等各种情况
     	"""
-        print('process_response,',response.url,response.status)
-        if response.status in [503]:
-            print('错误',response.url,response.status)
-            self.ip = get_ip()
-            request.meta['proxy'] = self.ip
-            time.sleep(2)
-            return request
-        elif response.status == 302:
-            print('302',response.url,response.status)
+        if response.status == 302:
             if response.text:
-                # print(response.text)
                 return response
             else:
                 self.ip = get_ip()
@@ -732,29 +714,7 @@ class ProxyMiddleware(object):
                 request.meta['proxy'] = self.ip
                 time.sleep(1)
                 return request
-        else:
-            res = (response.text)
-            html = etree.HTML(res)
-            bs = BeautifulSoup(res, 'lxml')
-            b4 = bs.title.string
-            if '访问验证-安居客'in b4 or '500 Internal Server Error' in b4:
-                print('验证码---重试！！！',response.url)
-                self.ip = get_ip()
-                print('重试ip!!',self.ip)
-                request.meta['proxy'] = self.ip
-                time.sleep(2)
-                return request
-            else:
-                return response
         return response
-
-    def process_exception(self, request, exception, spider):
-        self.ip = get_ip()
-        request.meta['proxy'] = self.ip
-        time.sleep(2)
-        # print(response.status)
-        return request
-        print(exception,self.ip)
 
 ```
 
@@ -1116,7 +1076,9 @@ import random
 ALL_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz'
 
 def random_sn():
-    """生成随机字符串"""
+    """
+    生成随机字符串
+    """
 
     s = ''
     chars_len = len(ALL_CHARS)
@@ -1126,14 +1088,18 @@ def random_sn():
     return s
 
 def random_ts():
-    """伪造随机时间戳"""
+    """
+    伪造随机时间戳
+    """
     str = '0123456789'
     s = ['155', '153']
     k = random.choice(s) + ''.join(random.choice(str) for i in range(10))
     return k
 
 class FootballSpider(Spider):
-    """解析网页"""
+    """
+    解析网页
+    """
 
     name = 'football'
     allowed_domains = ['mafengwo.cn']
@@ -1159,7 +1125,9 @@ class FootballSpider(Spider):
     }
 
     def start_requests(self):
-    	"""重写starts_requests()函数生成请求"""
+    	"""
+    	重写starts_requests()函数生成请求
+    	"""
         for month in range(0, 13):
             # 构建请求参数
             tag = 113 + month * 3
@@ -1168,7 +1136,9 @@ class FootballSpider(Spider):
             yield FormRequest(self.every_month_url, callback=self.parse, 			      formdata=month_num_params)
 
     def parse(self, response):
-        """解析每一页的每一个地点"""
+        """
+        解析每一页的每一个地点
+        """
 
         if response.status == 200 :
             res = json.loads(response.text)
@@ -1197,7 +1167,9 @@ class FootballSpider(Spider):
         logging.warning("parse_list失败")
 
     def parse_travellist(self, response):
-        """得到每一个地点的游记列表"""
+        """
+        得到每一个地点的游记列表
+        """
         # print("into parse_travellist************************************")
         if response.status == 200 :
             print("enter")
@@ -2331,68 +2303,99 @@ if __name__ == '__main__':
 
 # <a id="8">房天下</a>
 
-![](imgs/20190329140211.png)
+![](imgs/20190401214829.png)
 
 
 
-# 获取所有新楼盘信息
+# 获取租房信息
 
 * 1.获取所有城市
 * 2.获取每一城市所有房屋
-* 3.获取每个房屋详情
+* 3.获取每个房屋详情、
 
-房天下的分页栏是动态加载上去的，这里介绍下房屋分页获取代码
-
-
+**spider**
 
 ```
- def loupan(self,response):
-        '''
-        每个城市所有楼盘
-        :param response:
-        :return:
-        '''
+class ZuSpider(scrapy.Spider):
+    name = 'zu'
+    allowed_domains = ['*']
+    url = 'https://www.fang.com/SoufunFamily.htm?ctm=1.bj.xf_search.head.29'
+
+    def start_requests(self):
+        yield Request(self.url, dont_filter=True, callback=self.parse)
+
+    def parse(self, response):
+        """获取所有城市"""
+        
+        if response.status == 200:
+            html = etree.HTML(response.text)
+            t2 = html.xpath('//table[@class="table01"]')[1]
+            cons = t2.xpath('.//tr')
+            # 每个城市下有子城市
+            for con in cons[:]:
+                citys = con.xpath('./td[last()]/a')
+                for every_citys in citys[:]:
+                    title = every_citys.xpath('./text()')[0]
+                    href = every_citys.xpath('./@href')[0]
+                    print(title,href)
+                    if not href.startswith('https://world'):
+                        yield Request(href, dont_filter=True, callback=self.xuanze)
+
+    def xuanze(self,response):
+    	"""选择类型"""
         print(response.status)
         if response.status == 200:
-            base_url = response.url
             html = etree.HTML(response.text)
-            lous = html.xpath('//div[@class="nl_con clearfix" and contains(@id,"newhouse_loupai_list")]/ul/li')
-            if lous:
-                for lou in lous:
-                    img_url = lou.xpath('./div[@class="clearfix"]/div[@class="nlc_img"]/a/img/@src')
-                    if (img_url and len(img_url)>=2):
-                        i_url = img_url[1]
-                    else:
-                        i_url = ''
+            t2 = html.xpath('//div[@class="newnav20141104nr"]')
+            cons = t2[0].xpath('.//div[@class="s5" and contains(@track-id,"zu")]//a')
+            print(cons)
+            s = cons[0].xpath('./@href')
+            if s:
+                yield Request(s[0], dont_filter=True, callback=self.zufang)
 
-                    t_obj = lou.xpath('./div[@class="clearfix"]/div[@class="nlc_details"]//a')
-                    if t_obj:
-                        item = urlItem()
-                        href = t_obj[0].xpath('./@href')
-                        title = t_obj[0].xpath('./text()')
-                        print(title,'--------------this is title')
-                        if title:
-                            item['id'] = title[0].strip().replace('\t','').replace('\n','')
-                            item['img_url'] = i_url
-                            yield item
-
-                        if href:
-                            in_href = 'https:' + href[0]
-                            yield Request(in_href, dont_filter=True, callback=self.base_parse)
-                    else:
-                        print(t_obj)
-
-                if '/b9' not in base_url:
-                    n_href = re.sub('house/s','house/s/b92',base_url)
-                    yield Request(n_href, dont_filter=True, callback=self.loupan)
+    def zufang(self, response):
+    	"""租房信息"""
+        print(response.status)
+        if response.status == 200:
+            html = etree.HTML(response.text)
+            cons = html.xpath('//div[@class="houseList"]/dl')
+            next = html.xpath('//div[@class="fanye"]/a[last()-1]')
+            print(next,'---next=--')
+            base_url = response.url
+            for con in cons[:]:
+                item = zuItem()
+                hf = con.xpath('./dd/p[1]/a/@href')
+                ts = con.xpath('./dd/p[1]/a/text()')
+                price = con.xpath('.//div[@class="moreInfo"]')
+                if price:
+                    price = price[0].xpath('string(.)').strip().replace('\n','')
                 else:
-                    obj = re.search('/s/b9(\d+)/',base_url)
-                    if obj:
-                        temp = int(obj.group(1)) + 1
-                        tt = '/s/b9' + str(temp) + '/'
-                        n1_href = re.sub('/s/b9(\d+)/',tt,base_url)
-                        yield Request(n1_href, dont_filter=True, callback=self.loupan)
+                    price = ''
+                if ts:
+                    item['title'] = ts[0]
+                    print(ts[0])
+                    item['price'] = price
+                    yield item
+            # 判断是否到了尾页
+            if next:
+                k = next[0].xpath('./text()')
+                print(k)
+                if k[0] == '下一页':
+                    hf = next[0].xpath('./@href')
+                    k = 'com' + hf[0]
+                    print(k,base_url)
+                    s = re.sub(r'com.*', k, base_url)
+                    yield Request(s, dont_filter=True, callback=self.zufang)
+
 ```
+
+
+
+
+
+![](imgs/20190401214615.png)
+
+
 
 
 
