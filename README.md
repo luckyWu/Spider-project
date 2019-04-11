@@ -1,4 +1,4 @@
-# Spider-project
+﻿# Spider-project
 ##爬虫项目
 
 ###[1kkk动漫网-破解图形旋转验证码](#1)
@@ -269,6 +269,14 @@ if __name__ == "__main__":
 新建kkk1_selenium.py文件
 
 ```
+import requests
+import os
+import json
+from urllib.parse import quote
+from lxml import etree
+from PIL import Image
+from io import BytesIO
+import time,threading
 from selenium import webdriver
 from selenium.common.exceptions import 
 TimeoutException
@@ -277,15 +285,8 @@ from selenium.webdriver.support.ui import
 WebDriverWait
 from selenium.webdriver.support import 
 expected_conditions as EC
-from urllib.parse import quote
-from lxml import etree
-from PIL import Image
-from io import BytesIO
-import requests
-import os
-import time,threading
 from compare_helper import get_compare
-import json
+
 
 
 chrome_options = webdriver.ChromeOptions()
@@ -295,12 +296,14 @@ browser = webdriver.Chrome
 browser.set_window_size(1400, 700)
 wait = WebDriverWait(browser, 5)
 
+
 def get_big_image():
     # browser.execute_script('window.scrollTo(0, 
 300)')
     screenshot = browser.get_screenshot_as_png()
     screenshot = Image.open(BytesIO(screenshot))
     return screenshot
+
 
 # 取验证码坐标位置（左上角和右下角）
 def get_position():
@@ -320,6 +323,7 @@ background"]')))
 		lists.append((x1,y1,x1+x2,y1+y2))
 		print(x1,y1,x1+x2,y1+y2)	
 	return lists
+
 
 def get_page():
 	#点击弹出登陆框
@@ -411,6 +415,7 @@ background"]')))
 		# reset.click()
 		# get_page()
 
+
 if __name__ == "__main__":
 
 	url = 'http://www.1kkk.com'
@@ -466,7 +471,8 @@ class AnjukeItem(Item):
     addr = Field()
     price = Field()
     
-class zu_house_detail(Item):
+
+class Zudetail(Item):
     """创建名为anjuke的item"""
     table_name = 'zu_house_detail'
     id = Field()
@@ -529,6 +535,7 @@ class AjkSpider(scrapy.Spider):
                             callback=self.parse_city)
                         # print(n,city, href)
                         # n  += 1
+
 
     def parse_city(self, response):
         """
@@ -601,6 +608,7 @@ class AjkSpider(scrapy.Spider):
                                       'handle_httpstatus_list': [302]},
                                   callback=self.parse_zu)
 
+
     def parse_detail(self, response):
         """
         租房详情
@@ -612,7 +620,7 @@ class AjkSpider(scrapy.Spider):
         html = etree.HTML(res)
         if html is not None:
             con = html.xpath('//ul[@class="house-info-zufang cf"]')
-            item = zu_house_detail()
+            item = Zudetail()
             id = response.url
             con_text = con[0].xpath('string(.)').strip().replace('\n','')
             item['id'] = id
@@ -681,6 +689,7 @@ def get_ip():
     ip = 'http://' + s.text
     return ip
 
+
 class ProxyMiddleware(object):
 
     def __init__(self,user_agent):
@@ -735,7 +744,7 @@ SCHEDULER = "scrapy_redis.scheduler.Scheduler" # 配置调度队列
 
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter" # 指定使用scrapy_redis提供的去重类
 
-SCHEDULER_FLUSH_ON_START = True #爬取完后不清空爬取队列和去重指纹
+SCHEDULER_PERSIST = True #爬取完后不清空爬取队列和去重指纹
 
 REDIS_URL = 'redis://47.106.211.81:6379' # redis地址
 ```
@@ -1087,6 +1096,7 @@ def random_sn():
         s += (ALL_CHARS[index])
     return s
 
+
 def random_ts():
     """
     伪造随机时间戳
@@ -1095,6 +1105,7 @@ def random_ts():
     s = ['155', '153']
     k = random.choice(s) + ''.join(random.choice(str) for i in range(10))
     return k
+
 
 class FootballSpider(Spider):
     """
@@ -1124,6 +1135,7 @@ class FootballSpider(Spider):
         'page': '1'
     }
 
+
     def start_requests(self):
     	"""
     	重写starts_requests()函数生成请求
@@ -1134,6 +1146,7 @@ class FootballSpider(Spider):
             month_num_params = self.month_params
             month_num_params['tag[]'] = str(tag)
             yield FormRequest(self.every_month_url, callback=self.parse, 			      formdata=month_num_params)
+
 
     def parse(self, response):
         """
@@ -1165,6 +1178,7 @@ class FootballSpider(Spider):
                     yield FormRequest(self.every_month_url, callback=self.parse,
                                       formdata=month_page_next_params)
         logging.warning("parse_list失败")
+
 
     def parse_travellist(self, response):
         """
@@ -1529,6 +1543,7 @@ def scatter(k=120):
     plt.legend()
     plt.show()
 
+
 def ws(k):
     """多个显示"""
     fig = plt.figure(figsize=[12.8, 9.6])
@@ -1690,6 +1705,7 @@ def get_ip():
         ip = 'http://' + s.text
         return ip
     return None
+
 
 def get_cookie():
     url = 'http://127.0.0.1:8000/random'
@@ -1922,6 +1938,7 @@ class Chaojiying_Client(object):
         r = requests.post('http://upload.chaojiying.net/Upload/Processing.php', data=params, files=files, headers=self.headers)
         return r.json()
 
+
     def ReportError(self, im_id):
         """
         im_id:报错题目的图片ID
@@ -2048,6 +2065,7 @@ def parse_html(html):
     sublime.click()
     time.sleep(2)
     html = browser.page_source
+
 
 def main():
 	html = get_page()
@@ -2189,6 +2207,7 @@ browser = webdriver.Chrome(chrome_options=chrome_options)
 
 browser.set_window_size(1400, 700)
 wait = WebDriverWait(browser, 30)
+
 
 def get_page(page):
 	# browser.get('https://search.jd.com/Search?keyword=%E6%9C%BA%E5%99%A8%E4%BA%BA&enc=utf-8&qrst=1&rt=1&stop=1&vt=2&page=1&s=1&click=0')
